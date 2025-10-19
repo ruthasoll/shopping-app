@@ -1,46 +1,65 @@
-import React from "react";
-import Link from "next/link";
+"use client";
 
-const Login = () => {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function Home() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  // Hardcoded credentials
+  const hardcodedEmail = "user@example.com";
+  const hardcodedPassword = "password123";
+
+  const handleLogin = () => {
+    if (email === hardcodedEmail && password === hardcodedPassword) {
+      // Simulated user data
+      const userData = { name: "John Doe" };
+
+      // Store user data in sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(userData));
+
+      // Redirect to products page
+      router.push("/products");
+    } else {
+      alert("Invalid email or password");
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-200">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full mx-4">
-        <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Login</h2>
-        <form>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600 mb-2">Email</label>
-            <input
-              type="email"
-              id="email"
-              required
-              className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600 mb-2">Password</label>
-            <input
-              type="password"
-              id="password"
-              required
-              className="w-full border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition"
-          >
-            Login
-          </button>
-        </form>
-        <p className="text-center text-gray-600 mt-4">
-          Don't have an account?{" "}
-          <Link href="/signup" className="text-blue-600 hover:underline">
-            Sign Up
-          </Link>
-        </p>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-96">
+        <h1 className="text-2xl font-bold mb-6">Login</h1>
+        <div className="mb-4">
+          <label className="block text-gray-700" htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="user@example.com"
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-gray-700" htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            className="w-full p-2 border border-gray-300 rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="password123"
+          />
+        </div>
+        <button
+          onClick={handleLogin}
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition"
+        >
+          Log in
+        </button>
       </div>
     </div>
   );
-};
-
-export default Login;
+}
